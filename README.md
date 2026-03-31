@@ -21,4 +21,4 @@ The CommonLit Ease of Readability (CLEAR) dataset provides a valuable resource f
 
 
 ## References
-
+Maddali 2023, https://github.com/suhasmaddali/Predicting-Readability-of-Texts-Using-Machine-Learning
