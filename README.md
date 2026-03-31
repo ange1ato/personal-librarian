@@ -12,7 +12,7 @@ Prior work has combined feature engineering and regression modelling to determin
 In this project, we propose to expand on the existing literature by fine-tuning and evaluating a BERT-based model for predicting text readability. Our approach integrates semantic embeddings with regression techniques to estimate reading difficulty and compares the results against traditional baselines such as the Flesch-Kincaid Grade Level. Through this comparison, we aim to demonstrate that deep learning models can provide more accurate and meaningful assessments of readability, ultimately contributing to the development of more accessible educational materials.
 
 ## Dataset
-The CommonLit Ease of Readability (CLEAR) dataset provides a valuable resource for advancing this line of research. It contains thousands of text excerpts annotated with readability scores. By combining this dataset with transformer-based embeddings, it is possible to build models that better reflect the true cognitive demands of reading.
+The CommonLit Ease of Readability (CLEAR) dataset provides a valuable resource for advancing this line of research. It contains thousands of text excerpts annotated with readability scores (Brown 2021). By combining this dataset with transformer-based embeddings, it is possible to build models that better reflect the true cognitive demands of reading.
 
 ## Methods
 
@@ -22,3 +22,7 @@ The CommonLit Ease of Readability (CLEAR) dataset provides a valuable resource f
 
 ## References
 Maddali 2023, https://github.com/suhasmaddali/Predicting-Readability-of-Texts-Using-Machine-Learning
+
+CLEAR Corpus, https://docs.google.com/spreadsheets/d/1sfsZhhP2umXXtmEP_NRErxLuwgN98TyH7LWOq3j07O0/edit?gid=971821388#gid=971821388.
+
+Brown 2021, https://www.commonlit.org/blog/introducing-the-clear-corpus-an-open-dataset-to-advance-research-28ff8cfea84a/
