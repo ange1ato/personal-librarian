@@ -2,24 +2,34 @@
 
 ## Introduction
 Accurately assessing the difficulty of passages for testing student reading comprehension has long been a challenge for teachers, curriculum designers, and testing institutions. Educational institutions currently rely on metrics such as the Flesch-Kincaid Grade Level formula to determine readability and assign texts to specific age groups. However, these metrics heavily depend on surface-level features like sentence length. 
+
 Whilst they are easy to interpret and therefore assign, these metrics often fail to capture the more intricate complexities of semantics and language. Readability is influenced by many additional factors, such as domain-specific language, the use of abstract vocabulary, and subtle differences in meaning, which can make structurally simple sentences harder to understand. Conversely, structurally complex sentences may be easier to comprehend depending on their context. 
+
 This project explores whether a pretrained transformer model (BERT) can more accurately gauge the difficulty of texts. A comparison between existing traditional formulas and a transformer-based model (trained with CLEAR dataset) is conducted to predict readability scores and grade level classification for texts.
 
 ## Background / Literature Review
-n 1948, Robert Flesch developed the Flesch Reading Ease formula (Flesch, 1948), which multiplies the number of syllables per 100 words by a coefficient (0.846), multiplies the average number of words per sentence by a coefficient (1015), and subtracts both of those values from 206.835. At the time, researchers had been developing readability formulas stemming from educators’ discovery in the 1920s of a way to use vocabulary difficulty and sentence length to predict difficulty level (DuBay, 2004). In 1978, J. Peter Kincaid and others improved on the Flesch Reading Ease formula to create the Flesch-Kincaid readability tests, which include the Flesch-Kincaid grade level formula (Kincaid et al., 1975). These were created in work with the American Navy and tested on members of the Navy. This new formula involves multiplying the average number of words per sentence by 0.39 and adding that value to the number to the average number of syllables per word and subtracting 15.59 from that. These formulas were used frequently for decades, but researchers increasingly noticed that these formulas could not distinguish the semantics of the texts that were being examined. Structurally simple sentences about complex topics have the same readability score as structurally simple sentences about simple topics. As a result, we need the content and the context of the text to help identify how easy it is to read the text.
+In 1948, Robert Flesch developed the Flesch Reading Ease formula (Flesch, 1948), which multiplies the number of syllables per 100 words by a coefficient (0.846), multiplies the average number of words per sentence by a coefficient (1015), and subtracts both of those values from 206.835. At the time, researchers had been developing readability formulas stemming from educators’ discovery in the 1920s of a way to use vocabulary difficulty and sentence length to predict difficulty level (DuBay, 2004). In 1978, J. Peter Kincaid and others improved on the Flesch Reading Ease formula to create the Flesch-Kincaid readability tests, which include the Flesch-Kincaid grade level formula (Kincaid et al., 1975). These were created in work with the American Navy and tested on members of the Navy. This new formula involves multiplying the average number of words per sentence by 0.39 and adding that value to the number to the average number of syllables per word and subtracting 15.59 from that. These formulas were used frequently for decades, but researchers increasingly noticed that these formulas could not distinguish the semantics of the texts that were being examined. Structurally simple sentences about complex topics have the same readability score as structurally simple sentences about simple topics. As a result, we need the content and the context of the text to help identify how easy it is to read the text.
+
 In 2019, decades after the creation of the Flesch-Kincaid readability tests, BERT (Bidirectional Encoder Representations from Transformers) was created (Devlin et al., 2019). BERT is a language representation model that pretrains deep bidirectional representations from unlabeled text. This allows the pretrained BERT to be used to create state-of-the-art models for a wide variety of tasks with only one additional output layer. This was different from what preceded it in that it takes into consideration the context within which a word appears. This model accurately provides us with the meaning of every word and of the sentence overall, allowing for a better understanding of what the readability of the text actually is.
+
 At the intersection of readability and machine learning, neural supervised and unsupervised approaches have been used to determine the readability of documents (Martinc et al., 2021). In this research, it was found that deep neural networks are viable for both supervised and unsupervised readability tasks, but that the suitability of a specific architecture for the readability task depends on the data set specifics. Additionally, Maddali (2021) found that gradient boosting and neural networks performed best on assessing the readability of a text, but they relied on Word2Vec embeddings. This leads us to our research today on using the BERT embeddings with machine learning models to assess readability.
 
 ## Research Question
 Is a transformer-based LLM better at predicting the reading difficulty (and assigning the corresponding grade level) of educational texts than the Flesch-Kincaid model? 
+
 We hypothesize that our models using contextual embeddings from BERT will perform better than the baseline, which uses the traditional, limited metrics to assess readability.
 
 ## Our Components
 Our project formulates the difficulty prediction as a supervised regression task. 
+
 The input (x) to the model is an excerpt of text from the CLEAR dataset. Each of these inputs has a sequence of words, which is then tokenized and converted into vector representations. 
+
 We used contextual embeddings, which were generated by BERT for the deep learning model. These embeddings accounted for semantic meaning and syntactic structure.
+
 The output (y) of the model is the readability score for the input text. The readability score reflects the text’s difficulty by assigning a grade level that the text is best suited for. The score itself is a continuous value for this readability score.
+
 The objective function of our project was to train the model to correctly minimize the difference between the ground truth labels and the predicted readability scores, using mean squared error loss. MSE is well-suited for regression tasks because it heavily punishes the bigger deviations between the two scores.
+
 MSE also serves as an evaluation metric for model performance, as well as the correlation between the predicted and the actual readability score. Both of these metrics allowed us to assess how accurate and consistent the model was in evaluating the text’s difficulty with closer regard for how an actual human would interpret the text. 
 
 ## Methods
@@ -38,15 +48,19 @@ All models were evaluated using Mean Squared Error (MSE) and the R-squared metri
 
 ## Results
 The neural network achieved the best performance with an MSE of 0.396 and an R-squared score of 0.653, although the ridge and linear regression ones both performed pretty similarly. This indicates that the BERT embeddings already captured a lot of useful information about the difficulty of the texts to predict accurate readability scores. On the other hand, the more complex Random Forest and XGBoost models did not perform as well, which further indicates that the structure of the space is already better suited for regression tasks and doesn’t require these higher-level non-linear transformations. To our surprise, the Flesch-Kincaid baseline performed even worse than we would have expected; it has a high MSE of over 130 and a strong negative R-squared value. Whilst we knew the formula did miss more complex components of text readability (hence why we chose this topic for our final project in the first place), we were surprised at how it failed to generalize the texts in the dataset and accurately capture the complexities of the inputs. 
+
 The results affirmed our hypothesis that the semantic representations learned by our transformer models act as more informative indicators of text readability than surface-level features like sentence length and syllable count. This confirms that traditional metrics fail to accurately capture meaning and nuance in text passages. However, the relatively small gap in performance between simpler linear models and the neural network suggests that embeddings carried most of the predictive power, rather than the downstream model. Clearly, retrained language models are able to encode meaningful information about the difficulty of the texts, which the simpler predictive models can leverage. 
+
 Overall, the largest performance gain came from using the BERT embeddings rather than the existing features that determine readability, so we therefore understand that the best source of improvement to accuracy comes from the representation of the input text, as opposed to which specific regression model is chosen (representation matters more than the model).
 
 ## Ethics
 There are important ethical considerations in using AI to improve our access to appropriately-matched texts used in education, given that it shapes the intellectual upbringing of entire generations of children and determines their foundational linguistic abilities. With this in mind, it highlights the possibility of models that are trained on current existing datasets potentially inheriting any biases that already exist in the datasets. If this were the case, it might have ripple effects like a systematic misclassification of texts, which would affect certain groups of students differently from others. For instance, students who learn to read who are non-English natives might have certain predispositions towards certain sounds/syllables depending on the language they speak at home. 
+
 On the other hand, there is also the danger of oversimplifying text assignments if teachers were to use the model as a replacement for their own expertise. The best education is the one most personalized to the student, which is usually better understood by their teacher from watching them, and students in the same grade level or general reading category might vary a lot in skill within that one set. Thus, reducing the readability of a text purely to a numerical value might result in a mismatch and should be used in tandem with teachers’ knowledge of the student and the text. Perhaps if systems were implemented to track each individual student’s reading ability, for example, time-tracking different students reading the same text, this could be used in tandem with our model. In general, these models should be used as supportive tools to human judgment rather than as an automatic replacement.
 
 ## Future Work
 Aside from looking into pairing with reading-ability/comprehension assessment tools of the students themselves, future work could also look into training on a bigger dataset containing a wider variety of texts. The generalizability of the model might be improved in the future if fed from different domains and grade levels, or potentially even from different school systems’ grade systems across the world, to see if 2nd-grade-equivalent children in America are reading texts with the same difficulty as 2nd-grade-equivalent children in England, for example. 
+
 Alternatively, another avenue for future work could be trying to fine-tune larger transformer models, or even trying out other types of architectures like sequence-to-sequence models. This would allow us to gain a deeper understanding of how the capacity of models affects how directly they can generate the readability predictions. In this same vein of investigating models, we could also do more error analysis in model behavior, including things like each model’s sensitivity to different types of linguistic features, as it would give us a more rounded understanding of why it fails when it does.
 
 ## Reflection
@@ -54,8 +68,13 @@ Having now completed the project, it’s interesting to explore whether AI is ac
 
 ## References
 Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. Proceedings of NAACL-HLT 2019, 4171–4186. 
+
 DuBay, W. H. (2004). The Principles of Readability. Impact Information. 
+
 Flesch, R. (1948). A new readability yardstick. Journal of Applied Psychology, 32(3), 221–233. https://doi.org/10.1037/h0057532 
+
 Kincaid, J. P., Fishburne, Jr., Robert P., R., Richard L., C., & Brad S. (1975). Derivation of New Readability Formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy Enlisted Personnel: Defense Technical Information Center. https://doi.org/10.21236/ADA006655 
+
 Maddali, S. (2021). Suhasmaddali/Predicting-Readability-of-Texts-Using-Machine-Learning. https://github.com/suhasmaddali/Predicting-Readability-of-Texts-Using-Machine-Learning 
+
 Martinc, M., Pollak, S., & Robnik-Šikonja, M. (2021). Supervised and Unsupervised Neural Approaches to Text Readability. Computational Linguistics, 47(1), 141–179. https://doi.org/10.1162/coli_a_00398
