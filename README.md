@@ -53,6 +53,19 @@ The results affirmed our hypothesis that the semantic representations learned by
 
 Overall, the largest performance gain came from using the BERT embeddings rather than the existing features that determine readability, so we therefore understand that the best source of improvement to accuracy comes from the representation of the input text, as opposed to which specific regression model is chosen (representation matters more than the model).
 
+## Graphs & Outputs
+<img width="757" height="398" alt="Training_Loss_Curve" src="https://github.com/user-attachments/assets/61f3ebbc-7d38-4733-9b23-315a49bd7cfa" />
+
+
+<img width="1089" height="592" alt="R2_Model_Comparison" src="https://github.com/user-attachments/assets/23163d83-b23e-450a-854c-71b636c06a45" />
+
+
+<img width="1055" height="586" alt="MSE_Model_Comparison" src="https://github.com/user-attachments/assets/655485dd-9adc-470b-9bbd-33c8251b076a" />
+
+
+<img width="438" height="152" alt="Final_Model_Comparison" src="https://github.com/user-attachments/assets/eba74932-ba91-4220-b4eb-da30920bc551" />
+
+
 ## Ethics
 There are important ethical considerations in using AI to improve our access to appropriately-matched texts used in education, given that it shapes the intellectual upbringing of entire generations of children and determines their foundational linguistic abilities. With this in mind, it highlights the possibility of models that are trained on current existing datasets potentially inheriting any biases that already exist in the datasets. If this were the case, it might have ripple effects like a systematic misclassification of texts, which would affect certain groups of students differently from others. For instance, students who learn to read who are non-English natives might have certain predispositions towards certain sounds/syllables depending on the language they speak at home. 
 
