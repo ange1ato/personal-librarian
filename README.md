@@ -14,12 +14,6 @@ In this project, we propose to expand on the existing literature by fine-tuning 
 ## Dataset
 The CommonLit Ease of Readability (CLEAR) dataset provides a valuable resource for advancing this line of research. It contains thousands of text excerpts annotated with readability scores (Brown 2021). By combining this dataset with transformer-based embeddings, it is possible to build models that better reflect the true cognitive demands of reading.
 
-## Methods
-
-
-## Results
-
-
 ## References
 Maddali 2023, https://github.com/suhasmaddali/Predicting-Readability-of-Texts-Using-Machine-Learning
 
